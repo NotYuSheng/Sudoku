@@ -8,6 +8,7 @@ public class GameBoard extends JPanel {
 	// Name-constants for the game board properties
 	public static final int GRID_SIZE = 9; // Size of the board
 	public static final int SUBGRID_SIZE = 3; // Size of the sub-grid
+	public static final int SQUAREROOTGRID = (int) Math.sqrt(GRID_SIZE);
 
 	// Name-constants for UI sizes
 	public static final int CELL_SIZE = 60; // Cell width/height in pixels

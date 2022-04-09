@@ -21,7 +21,7 @@ public class SudokuMain extends JFrame {
 
 		cp.add(board, BorderLayout.CENTER);
 
-		// Add a button to the south to re-start the game
+		// Add a button to the south to re-start the game	
 		cp.add(new JButton("RESTART"), BorderLayout.EAST);
 
 		board.init();
