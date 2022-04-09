@@ -33,16 +33,18 @@ public class GameBoard extends JPanel {
 		}
 
 		// [TODO 3] Allocate a common listener as the ActionEvent listener for all the
-		// [TODO 3]
+
 		CellInputListener listener = new CellInputListener();
 		// [TODO 4] Every editable cell adds this common listener
-		// [TODO 4]
-		/*
-		 * for (int row ...) { for (int col ...) { if (cells[row][col].isEditable) {
-		 * cells[row][col].addActionListener(listener); // For all editable rows and
-		 * cols } } }
-		 */
 
+		for (int row = 0; row < GRID_SIZE; row++) {
+			for (int col = 0; col < GRID_SIZE; col++) {
+				if (cells[row][col].isEditable()) {
+					cells[row][col].addActionListener(listener);
+					// For all editable rows and cols
+				}
+			}
+		}
 		super.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
 	}
 
@@ -83,27 +85,29 @@ public class GameBoard extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			// Get the JTextField that triggers this event
 			Cell sourceCell = (Cell) e.getSource();
+
+			// Retrieve the int entered
+			int numberIn = Integer.parseInt(sourceCell.getText());
 			// For debugging
 			System.out.println("You entered " + sourceCell.getText());
 
 			/*
-			 * [TODO 5] 1. Get the input String via sourceCell.getText() 2. Convert the
-			 * String to int via Integer.parseInt(). 3. Assume that the solution is unique.
-			 * Compare the input number with the number in sourceCell.number. Set its status
-			 * via sourceCell.status = CellStatus.CORRECT_GUESS (or WRONG_GUESS) and
-			 * sourceCell.paint() to update the display.
-			 * 
-			 * setBackground(Color c) // Set the background color of the component
-			 * setForeground(Color c) // Set the text color of the JTextField setFont(Font
-			 * f) // Set the font used by the JTextField setHorizontalAlignment(int align);
-			 * // align: JTextField.CENTER, JTextField.LEFT, JTextField.RIGHT
-			 * isEditable():boolean setEditable(boolean b)
+			 * [TODO 5] Check the numberIn against sourceCell.number. Update the cell status
+			 * sourceCell.status, and re-paint the cell via sourceCell.paint().
 			 */
-			 /*
+			if (numberIn == sourceCell.number) {
+				sourceCell.status = CellStatus.CORRECT_GUESS;
+			} else {
+				sourceCell.status = CellStatus.WRONG_GUESS;
+			}
+			sourceCell.paint();
+			/*
 			 * [TODO 6][Later] Check if the player has solved the puzzle after this move, by
 			 * call isSolved(). Put up a congratulation JOptionPane, if so.
 			 */
-			JOptionPane.showMessageDialog(null, "Congratulation!");
+			if (isSolved()) {
+				JOptionPane.showMessageDialog(null, "Congratulation!");
+			}
 		}
 	}
 }
