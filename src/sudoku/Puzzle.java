@@ -29,6 +29,14 @@ public class Puzzle {
 		super(); // JPanel
 	}
 
+	public void puzzleTableClear() {
+		for (int row = 0; row < GameBoard.GRID_SIZE; row++) {
+			for (int col = 0; col < GameBoard.GRID_SIZE; col++) {
+				puzzleTable[row][col] = 0;
+			}
+		}
+	}
+	
 	public void puzzleTableIsShownClear() {
 		for (int row = 0; row < GameBoard.GRID_SIZE; row++) {
 			for (int col = 0; col < GameBoard.GRID_SIZE; col++) {
@@ -132,43 +140,48 @@ public class Puzzle {
 		return false;
 	}
 
-	public void removeDigits(int remove) {
-		while (remove != 0) {
-			int cellId = (int) Math.floor((Math.random() * GameBoard.GRID_SIZE * GameBoard.GRID_SIZE + 1)) - 1;
-
-			int row = (cellId / GameBoard.GRID_SIZE);
-			int col = cellId % 9;
-			if (col != 0)
-				col -= 1;
-
+	public int getRandomNumber(int min, int max) {
+	    return (int) ((Math.random() * (max - min + 1)) + min);
+	}
+	
+	public void removeDigits(int count) {
+		while (count != 0) {
+			int row = getRandomNumber(0, GameBoard.GRID_SIZE - 1);
+			int col = getRandomNumber(0, GameBoard.GRID_SIZE - 1);
+			//int col = 8;
 			if (puzzleTable[row][col] != 0) {
-				remove--;
 				puzzleTable[row][col] = 0;
 				puzzleTableIsShown[row][col] = false;
+				count--;
 			}
 		}
 	}
 
+	/*
 	public void fillValues(int numToGuess) {
+		puzzleTableClear();
 		fillGrid();
 		fillRemaining(0, GameBoard.SQUAREROOTGRID);
 		puzzleTableIsShownClear();
 		removeDigits(numToGuess);
 	}
+	*/
 
 	public void newPuzzle(int numToGuess) {
 		// Fill Puzzle Table
-		fillValues(numToGuess);
-
-		System.out.println(Arrays.deepToString(puzzleTable));
+		// fillValues(numToGuess);
+		puzzleTableClear();
+		fillGrid();
+		fillRemaining(0, GameBoard.SQUAREROOTGRID);
 		
-		
-
 		for (int row = 0; row < GameBoard.GRID_SIZE; ++row) {
 			for (int col = 0; col < GameBoard.GRID_SIZE; ++col) {
 				numbers[row][col] = puzzleTable[row][col];
 			}
 		}
+		
+		puzzleTableIsShownClear();
+		removeDigits(numToGuess);
 
 		/*
 		// Hardcoded here for simplicity.

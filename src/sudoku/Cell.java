@@ -34,6 +34,7 @@ public class Cell extends JTextField {
    // Initialize the cell for a new game, given the puzzle number and isShown
    public void init(int number, boolean isShown) {
       this.number = number;
+      System.out.println(number);
       status = isShown ? CellStatus.SHOWN : CellStatus.NO_GUESS;
       paint();
    }

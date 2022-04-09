@@ -55,12 +55,12 @@ public class GameBoard extends JPanel {
 	 */
 	public void init() {
 		// Get a new puzzle
-		puzzle.newPuzzle(2);
+		puzzle.newPuzzle(49);
 
 		// Based on the puzzle, initialize all the cells.
 		for (int row = 0; row < GRID_SIZE; ++row) {
 			for (int col = 0; col < GRID_SIZE; ++col) {
-				cells[row][col].init(puzzle.numbers[row][col], puzzle.isShown[row][col]);
+				cells[row][col].init(puzzle.numbers[row][col], puzzle.puzzleTableIsShown[row][col]);
 			}
 		}
 	}
