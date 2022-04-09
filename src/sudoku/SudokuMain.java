@@ -13,17 +13,22 @@ public class SudokuMain extends JFrame {
 	JButton btnNewGame = new JButton("New Game");
 	public static final int WINDOW_WIDTH = 300;
 	public static final int WINDOW_HEIGHT = 150;
-
+	private Button newGameBtn;
+	
 	// Constructor
 	public SudokuMain() {
+		
 		Container cp = getContentPane();
 		cp.setLayout(new BorderLayout());
 
 		cp.add(board, BorderLayout.CENTER);
 
-		// Add a button to the south to re-start the game	
-		cp.add(new JButton("RESTART"), BorderLayout.EAST);
-
+		// Add a button to the south to re-start the game
+		newGameBtn = new Button("New Game");
+		cp.add(newGameBtn, BorderLayout.EAST);
+		newGameBtnListener listener = new newGameBtnListener();
+		newGameBtn.addActionListener(listener);
+		
 		board.init();
 
 		pack(); // Pack the UI components, instead of setSize()
@@ -40,5 +45,13 @@ public class SudokuMain extends JFrame {
 				new SudokuMain(); // Let the constructor do the job
 			}
 		});
+	}
+	
+	private class newGameBtnListener implements ActionListener {
+		// ActionEvent handler ‐ Called back upon button‐click.
+		@Override
+		public void actionPerformed(ActionEvent evt) {
+			board.init();
+		}
 	}
 }

@@ -108,6 +108,7 @@ public class GameBoard extends JPanel {
 			 */
 			if (isSolved()) {
 				JOptionPane.showMessageDialog(null, "Congratulation!");
+				init();
 			}
 		}
 	}
