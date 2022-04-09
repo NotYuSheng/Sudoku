@@ -4,7 +4,7 @@ OOP Java Sudoku
 - [x] Reset/Restart the game.
 - [ ] A good Sudoku engine shall accept any "valid" number at the time of input (no duplicate in row, column and sub-grid), but signal a conflict whenever it is detected. Highlight the conflicting cells.
 - [ ] **Choice of puzzles and difficulty levels (e.g,, easy, intermediate, difficult).**
-- [ ] Create a menu bar for options such as "File" (~~"New Game"~~, "Reset Game", "Exit"), "Options", and "Help" (Use JMenuBar, JMenu, and JMenuItem classes).
+- [ ] Create a menu bar for options such as "File" ("New Game", "Reset Game", "Exit"), "Options", and "Help" (Use JMenuBar, JMenu, and JMenuItem classes).
 - [ ] Create a status bar (JTextField at the south zone of BorderLayout) to show the messages (e.g., number of cells remaining) (google "java swing statusbar").
 - [ ] Re-organize your codes. Apply your OO knowledge to factor out a class called GameBoard, which is a customized JPanel.
 - [ ] Beautify your graphical interface, e.g., color, font, layout, etc.
