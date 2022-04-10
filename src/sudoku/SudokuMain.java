@@ -82,7 +82,6 @@ public class SudokuMain extends JFrame {
         newgamesubmenu.add(medium);
         newgamesubmenu.add(hard);
         
-        
         // Add submenu to menu
         menu.add(filesubmenu);
         
@@ -102,7 +101,6 @@ public class SudokuMain extends JFrame {
         
 		// add menubar to frame
 		setJMenuBar(menubar);
-		
 		
 	}
 
@@ -142,6 +140,9 @@ public class SudokuMain extends JFrame {
 	        System.out.println(action + " selected");
 	        if (action == "Exit") {
 	        	dispose();
+	        }
+	        if (action == "Reset Game") {
+				board.loadPuzzle();
 	        }
 		}
 	}

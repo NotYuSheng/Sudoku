@@ -41,8 +41,8 @@ public class GameBoard extends JPanel {
 		for (int row = 0; row < GRID_SIZE; row++) {
 			for (int col = 0; col < GRID_SIZE; col++) {
 				if (cells[row][col].isEditable()) {
-					cells[row][col].addActionListener(listener);
 					// For all editable rows and cols
+					cells[row][col].addActionListener(listener);
 				}
 			}
 		}
@@ -63,6 +63,19 @@ public class GameBoard extends JPanel {
 				cells[row][col].init(puzzle.numbers[row][col], puzzle.puzzleTableIsShown[row][col]);
 			}
 		}
+	}
+	
+	public void loadPuzzle() {
+		// Get a new puzzle
+		puzzle.loadPuzzle();
+
+		// Based on the puzzle, initialize all the cells.
+		for (int row = 0; row < GRID_SIZE; ++row) {
+			for (int col = 0; col < GRID_SIZE; ++col) {
+				cells[row][col].init(puzzle.numbers[row][col], puzzle.puzzleTableIsShown[row][col]);
+			}
+		}
+		
 	}
 
 	/**

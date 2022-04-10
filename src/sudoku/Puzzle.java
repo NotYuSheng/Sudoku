@@ -11,11 +11,7 @@
 
 package sudoku;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 /**
  * The Sudoku number puzzle to be solved
@@ -32,6 +28,10 @@ public class Puzzle {
 
 	// Nodes that are shown
 	boolean[][] puzzleTableIsShown = new boolean[GameBoard.GRID_SIZE][GameBoard.GRID_SIZE];
+	
+	// Save states
+	int[][] saveTable;
+	boolean[][] saveIsShown;
 	
 	// Constructor
 	public Puzzle() {
@@ -157,7 +157,6 @@ public class Puzzle {
 		while (count != 0) {
 			int row = getRandomNumber(0, GameBoard.GRID_SIZE - 1);
 			int col = getRandomNumber(0, GameBoard.GRID_SIZE - 1);
-			//int col = 8;
 			if (puzzleTable[row][col] != 0) {
 				puzzleTable[row][col] = 0;
 				puzzleTableIsShown[row][col] = false;
@@ -166,26 +165,26 @@ public class Puzzle {
 		}
 	}
 
-	/*
-	public void fillValues(int numToGuess) {
-		puzzleTableClear();
-		fillGrid();
-		fillRemaining(0, GameBoard.SQUAREROOTGRID);
-		puzzleTableIsShownClear();
-		removeDigits(numToGuess);
+	public void savePuzzle() {
+		saveTable = puzzleTable;
+		saveIsShown = puzzleTableIsShown;
 	}
-	*/
-
+	
+	public void loadPuzzle() {
+		puzzleTable = saveTable;
+		puzzleTableIsShown = saveIsShown;
+	}
+	
 	public void resetPuzzle() {
-		;
+		loadPuzzle();
 	}
 	
 	public void newPuzzle(int numToGuess) {
 		// Fill Puzzle Table
-		// fillValues(numToGuess);
 		puzzleTableClear();
 		fillGrid();
 		fillRemaining(0, GameBoard.SQUAREROOTGRID);
+		savePuzzle();
 		
 		for (int row = 0; row < GameBoard.GRID_SIZE; ++row) {
 			for (int col = 0; col < GameBoard.GRID_SIZE; ++col) {
