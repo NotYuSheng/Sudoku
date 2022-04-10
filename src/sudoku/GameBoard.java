@@ -17,10 +17,15 @@ public class GameBoard extends JPanel {
 	public static final int DEFAULT_DIFFICULTY = 50;
 	// Board width/height in pixels
 
+	public int incomplete_cell;
+	public JTextField status = new JTextField("Status: " + incomplete_cell + " unsolved");
+	
 	// The game board composes of 9x9 "Customized" JTextFields,
 	private Cell[][] cells = new Cell[GRID_SIZE][GRID_SIZE];
 	// It also contains a Puzzle
 	private Puzzle puzzle = new Puzzle();
+	
+	boolean isGamePaused = false;
 
 	// Constructor
 	public GameBoard() {
@@ -56,8 +61,11 @@ public class GameBoard extends JPanel {
 	 */
 	public void init(int numGuess) {
 		// Get a new puzzle
+		incomplete_cell = numGuess;
 		puzzle.newPuzzle(numGuess);
-
+		isGamePaused = false;
+		//status.setText("Status: " + GameBoard.DEFAULT_DIFFICULTY + " unsolved");
+		
 		// Based on the puzzle, initialize all the cells.
 		for (int row = 0; row < GRID_SIZE; ++row) {
 			for (int col = 0; col < GRID_SIZE; ++col) {
@@ -89,6 +97,7 @@ public class GameBoard extends JPanel {
 				cells[row][col].init(puzzle.numbers[row][col], puzzle.puzzleTableIsShown[row][col]);
 			}
 		}
+		incomplete_cell -= 1;
 		if (isSolved()) {
 			JOptionPane.showMessageDialog(null, "Congratulation!");
 			init(DEFAULT_DIFFICULTY);
@@ -109,36 +118,47 @@ public class GameBoard extends JPanel {
 		}
 		return true;
 	}
-
+	
+	public void pause() {
+		isGamePaused = true;
+	}
+	
+	public void resume() {
+		isGamePaused = false;
+	}
+	
+	
 	// [TODO 2] Define a Listener Inner Class
 	private class CellInputListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// Get the JTextField that triggers this event
-			Cell sourceCell = (Cell) e.getSource();
-
-			// Retrieve the int entered
-			int numberIn = Integer.parseInt(sourceCell.getText());
-			// For debugging
-			System.out.println("You entered " + sourceCell.getText());
-
-			/*
-			 * [TODO 5] Check the numberIn against sourceCell.number. Update the cell status
-			 * sourceCell.status, and re-paint the cell via sourceCell.paint().
-			 */
-			if (numberIn == sourceCell.number) {
-				sourceCell.status = CellStatus.CORRECT_GUESS;
-			} else {
-				sourceCell.status = CellStatus.WRONG_GUESS;
-			}
-			sourceCell.paint();
-			/*
-			 * [TODO 6][Later] Check if the player has solved the puzzle after this move, by
-			 * call isSolved(). Put up a congratulation JOptionPane, if so.
-			 */
-			if (isSolved()) {
-				JOptionPane.showMessageDialog(null, "Congratulation!");
-				init(DEFAULT_DIFFICULTY);
+			if (!isGamePaused) {
+				// Get the JTextField that triggers this event
+				Cell sourceCell = (Cell) e.getSource();
+				
+				// Retrieve the int entered
+				int numberIn = Integer.parseInt(sourceCell.getText());
+				// For debugging
+				System.out.println("You entered " + sourceCell.getText());
+	
+				/*
+				 * [TODO 5] Check the numberIn against sourceCell.number. Update the cell status
+				 * sourceCell.status, and re-paint the cell via sourceCell.paint().
+				 */
+				if (numberIn == sourceCell.number) {
+					sourceCell.status = CellStatus.CORRECT_GUESS;
+				} else {
+					sourceCell.status = CellStatus.WRONG_GUESS;
+				}
+				sourceCell.paint();
+				/*
+				 * [TODO 6][Later] Check if the player has solved the puzzle after this move, by
+				 * call isSolved(). Put up a congratulation JOptionPane, if so.
+				 */
+				if (isSolved()) {
+					JOptionPane.showMessageDialog(null, "Congratulation!");
+					init(DEFAULT_DIFFICULTY);
+				}
 			}
 		}
 	}
