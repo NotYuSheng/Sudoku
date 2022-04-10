@@ -10,11 +10,11 @@ OOP Java Sudoku
 - [ ] Beautify your graphical interface, e.g., color, font, layout, etc.
 - [ ] **Timer (pause/resume), score, progress bar.**
 - [ ] A side panel for command, display, strategy?
-- [ ] Automatic puzzle generation with **various difficulty level.**
+- [ ] **Automatic puzzle generation with various difficulty level.**
 - [ ] The sample program processes ActionEvent of the JTextField, which requires user to push the ENTER key. Try KeyEvent with keyTyped() handler; or other means that does not require pushing of ENTER key.
 - [ ] **Sound effect, background music, enable/disable sound?**
 - [ ] High score and player name?
 - [ ] Hints and cheats (reveal a cell, or reveal all cells with number n)?
 - [ ] Choice of display "theme"?
-- [ ] Use of images and icons?
+- [ ] **Use of images and icons?**
 - [ ] (Very difficult) Multi-Player game through networking.
