@@ -16,5 +16,5 @@ OOP Java Sudoku
 - [ ] High score and player name?
 - [ ] Hints and cheats (reveal a cell, or reveal all cells with number n)?
 - [ ] Choice of display "theme"?
-- [ ] **Use of images and icons?**
+- [X] Use of images and icons?
 - [ ] (Very difficult) Multi-Player game through networking.
