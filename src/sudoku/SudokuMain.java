@@ -3,6 +3,10 @@ package sudoku;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.io.*;
+import java.net.URL;
+import javax.sound.sampled.*;
+import javax.swing.*;
 
 /**
  * The main Sudoku program
@@ -118,6 +122,7 @@ public class SudokuMain extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				new SudokuMain(); // Let the constructor do the job
+				music();
 			}
 		});
 	}
@@ -157,4 +162,25 @@ public class SudokuMain extends JFrame {
 	        }
 		}
 	}
+	
+	public static void music() {
+		 try {
+	         // Open an audio input stream.
+			// from a wave File
+			 File soundFile = new File("C:\\javaproject\\tutorial7\\sudoku\\backgroundmusic.wav");
+			 AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+	         // Get a sound clip resource.
+	         Clip clip = AudioSystem.getClip();
+	         // Open audio clip and load samples from the audio input stream.
+	         clip.open(audioIn);
+	         clip.start();
+	      } catch (UnsupportedAudioFileException e) {
+	         e.printStackTrace();
+	      } catch (IOException e) {
+	         e.printStackTrace();
+	      } catch (LineUnavailableException e) {
+	         e.printStackTrace();
+	      }
+	   }
+	
 }
