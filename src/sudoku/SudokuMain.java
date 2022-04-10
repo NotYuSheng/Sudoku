@@ -37,6 +37,17 @@ public class SudokuMain extends JFrame {
 	public static final int WINDOW_HEIGHT = 150;
 	// private Button newGameBtn;
 	
+	// Timer Variables
+	int elaspedTime = 0;
+	int seconds = 0;
+	int minutes = 0;
+	int hours = 0;
+	boolean started = false;
+	String seconds_string = String.format("%02d", seconds);
+	String minutes_string = String.format("%02d", minutes);
+	String hours_string = String.format("%02d", hours);
+	static Timer timer;
+	
 	// Constructor
 	public SudokuMain() {
 		
@@ -113,6 +124,28 @@ public class SudokuMain extends JFrame {
         
 		// add menubar to frame
 		setJMenuBar(menubar);
+		
+		// timer
+		JLabel timeLabel = new JLabel("00:00:00");
+		add(timeLabel, BorderLayout.NORTH);
+		
+		Timer timer = new Timer(1000, new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				elaspedTime=elaspedTime+1000;
+				hours = (elaspedTime/3600000);
+				minutes = (elaspedTime/60000) % 60;
+				seconds = (elaspedTime/1000) % 60;
+				seconds_string = String.format("%02d", seconds);
+				minutes_string = String.format("%02d", minutes);
+				hours_string = String.format("%02d", hours);
+				timeLabel.setText(hours_string+":"+ minutes_string+":"+seconds_string);
+				
+			}
+		});
+		//timer.restart();
+		timer.start();
 		
 	}
 
