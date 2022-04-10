@@ -9,12 +9,12 @@ OOP Java Sudoku
 - [ ] Re-organize your codes. Apply your OO knowledge to factor out a class called GameBoard, which is a customized JPanel.
 - [ ] Beautify your graphical interface, e.g., color, font, layout, etc.
 - [ ] **Timer (pause/resume), score, progress bar.**
-- [ ] A side panel for command, display, strategy?
+- [ ] ~~A side panel for command, display, strategy?~~
 - [X] Automatic puzzle generation with various difficulty level.
 - [ ] The sample program processes ActionEvent of the JTextField, which requires user to push the ENTER key. Try KeyEvent with keyTyped() handler; or other means that does not require pushing of ENTER key.
 - [ ] **Sound effect, background music, enable/disable sound?**
-- [ ] High score and player name?
-- [X] Hints and cheats (reveal a cell, or reveal all cells with number n)?
+- [ ] ~~High score and player name?~~
+- [X] Hints and cheats (reveal a cell~~, or reveal all cells with number n~~)?
 - [ ] Choice of display "theme"?
 - [X] Use of images and icons?
-- [ ] (Very difficult) Multi-Player game through networking.
+- [ ] ~~(Very difficult) Multi-Player game through networking.~~
