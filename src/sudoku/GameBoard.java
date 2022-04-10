@@ -14,6 +14,7 @@ public class GameBoard extends JPanel {
 	public static final int CELL_SIZE = 60; // Cell width/height in pixels
 	public static final int BOARD_WIDTH = CELL_SIZE * GRID_SIZE;
 	public static final int BOARD_HEIGHT = CELL_SIZE * GRID_SIZE;
+	public static final int DEFAULT_DIFFICULTY = 50;
 	// Board width/height in pixels
 
 	// The game board composes of 9x9 "Customized" JTextFields,
@@ -77,6 +78,22 @@ public class GameBoard extends JPanel {
 		}
 		
 	}
+	
+	public void hintPuzzle() {
+		// Get a new puzzle
+		puzzle.hintPuzzle();
+
+		// Based on the puzzle, initialize all the cells.
+		for (int row = 0; row < GRID_SIZE; ++row) {
+			for (int col = 0; col < GRID_SIZE; ++col) {
+				cells[row][col].init(puzzle.numbers[row][col], puzzle.puzzleTableIsShown[row][col]);
+			}
+		}
+		if (isSolved()) {
+			JOptionPane.showMessageDialog(null, "Congratulation!");
+			init(DEFAULT_DIFFICULTY);
+		}
+	}
 
 	/**
 	 * Return true if the puzzle is solved i.e., none of the cell have status of
@@ -121,7 +138,7 @@ public class GameBoard extends JPanel {
 			 */
 			if (isSolved()) {
 				JOptionPane.showMessageDialog(null, "Congratulation!");
-				init(50);
+				init(DEFAULT_DIFFICULTY);
 			}
 		}
 	}

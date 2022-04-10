@@ -10,6 +10,10 @@ import javax.swing.*;
 public class SudokuMain extends JFrame {
 	// private variables
 	GameBoard board = new GameBoard();
+	
+	// Hint Button
+	JButton btnHint = new JButton("Hint");
+	
 	// menu
 	static JMenu menu;
 	static JMenu filesubmenu;
@@ -36,12 +40,12 @@ public class SudokuMain extends JFrame {
 		cp.setLayout(new BorderLayout());
 
 		cp.add(board, BorderLayout.CENTER);
-
+		
 		// Default start at Easy difficulty
-		board.init(50);
+		board.init(GameBoard.DEFAULT_DIFFICULTY);
 		
 		// Set icon (change path)
-		Image icon = Toolkit.getDefaultToolkit().getImage("C:\\javaproject\\tutorial7\\sudoku\\icon.png");    
+		Image icon = Toolkit.getDefaultToolkit().getImage("icon.png");    
 		setIconImage(icon);      
 		
 		pack(); // Pack the UI components, instead of setSize()
@@ -124,13 +128,13 @@ public class SudokuMain extends JFrame {
 		public void actionPerformed(ActionEvent evt) {
 			String action = evt.getActionCommand();
 			if (action == "Easy") {
-				board.init(50);
+				board.init(GameBoard.DEFAULT_DIFFICULTY);
 	        }
 			if (action == "Medium") {
-				board.init(60);
+				board.init(GameBoard.DEFAULT_DIFFICULTY + 10);
 	        }
 			if (action == "Hard") {
-				board.init(70);
+				board.init(GameBoard.DEFAULT_DIFFICULTY + 20);
 	        }
 		}
 	}
@@ -147,6 +151,9 @@ public class SudokuMain extends JFrame {
 	        }
 	        if (action == "Reset Game") {
 				board.loadPuzzle();
+	        }
+	        if (action == "Help") {
+	        	board.hintPuzzle();
 	        }
 		}
 	}

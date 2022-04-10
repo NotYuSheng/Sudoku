@@ -28,11 +28,11 @@ public class Puzzle {
 
 	// Nodes that are shown
 	boolean[][] puzzleTableIsShown = new boolean[GameBoard.GRID_SIZE][GameBoard.GRID_SIZE];
-	
+
 	// Save states
 	int[][] saveTable;
 	boolean[][] saveIsShown;
-	
+
 	// Constructor
 	public Puzzle() {
 		super(); // JPanel
@@ -45,7 +45,7 @@ public class Puzzle {
 			}
 		}
 	}
-	
+
 	public void puzzleTableIsShownClear() {
 		for (int row = 0; row < GameBoard.GRID_SIZE; row++) {
 			for (int col = 0; col < GameBoard.GRID_SIZE; col++) {
@@ -53,16 +53,16 @@ public class Puzzle {
 			}
 		}
 	}
-	
+
 	public void fillGrid() {
 		int count = 0;
-		for (int i = 0; i<GameBoard.GRID_SIZE; i += GameBoard.SQUAREROOTGRID) {
+		for (int i = 0; i < GameBoard.GRID_SIZE; i += GameBoard.SQUAREROOTGRID) {
 			int[] randArray = generateRandArr();
 			for (int row = 0; row < GameBoard.SQUAREROOTGRID; row++) {
 				for (int col = 0; col < GameBoard.SQUAREROOTGRID; col++) {
 					puzzleTable[i + row][i + col] = randArray[count];
 					count++;
-				}	
+				}
 			}
 			count = 0;
 		}
@@ -150,9 +150,9 @@ public class Puzzle {
 	}
 
 	public int getRandomNumber(int min, int max) {
-	    return (int) ((Math.random() * (max - min + 1)) + min);
+		return (int) ((Math.random() * (max - min + 1)) + min);
 	}
-	
+
 	public void removeDigits(int count) {
 		while (count != 0) {
 			int row = getRandomNumber(0, GameBoard.GRID_SIZE - 1);
@@ -169,29 +169,42 @@ public class Puzzle {
 		saveTable = puzzleTable;
 		saveIsShown = puzzleTableIsShown;
 	}
-	
+
 	public void loadPuzzle() {
 		puzzleTable = saveTable;
 		puzzleTableIsShown = saveIsShown;
 	}
-	
+
 	public void resetPuzzle() {
 		loadPuzzle();
 	}
-	
+
+	public void hintPuzzle() {
+		boolean search = true;
+		for (int row = 0; row < GameBoard.GRID_SIZE; row++) {
+			for (int col = 0; col < GameBoard.GRID_SIZE; col++) {
+				if (puzzleTableIsShown[row][col] == false && search) {
+					puzzleTableIsShown[row][col] = true;
+					search = false;
+				}
+			}
+
+		}
+	}
+
 	public void newPuzzle(int numToGuess) {
 		// Fill Puzzle Table
 		puzzleTableClear();
 		fillGrid();
 		fillRemaining(0, GameBoard.SQUAREROOTGRID);
 		savePuzzle();
-		
+
 		for (int row = 0; row < GameBoard.GRID_SIZE; ++row) {
 			for (int col = 0; col < GameBoard.GRID_SIZE; ++col) {
 				numbers[row][col] = puzzleTable[row][col];
 			}
 		}
-		
+
 		puzzleTableIsShownClear();
 		removeDigits(numToGuess);
 
