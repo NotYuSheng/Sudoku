@@ -1,5 +1,14 @@
 // https://www.geeksforgeeks.org/program-sudoku-generator/
 
+/*
+1. Fill all the diagonal 3x3 matrices.
+2. Fill recursively rest of the non-diagonal matrices.
+   For every cell to be filled, we try all numbers until
+   we find a safe number to be placed.  
+3. Once matrix is fully filled, remove K elements
+   randomly to complete game.
+ */
+
 package sudoku;
 
 import java.util.Arrays;
@@ -167,6 +176,10 @@ public class Puzzle {
 	}
 	*/
 
+	public void resetPuzzle() {
+		;
+	}
+	
 	public void newPuzzle(int numToGuess) {
 		// Fill Puzzle Table
 		// fillValues(numToGuess);
@@ -182,27 +195,6 @@ public class Puzzle {
 		
 		puzzleTableIsShownClear();
 		removeDigits(numToGuess);
-
-		/*
-		// Hardcoded here for simplicity.
-				int[][] hardcodedNumbers = { { 5, 3, 4, 6, 7, 8, 9, 1, 2 }, { 6, 7, 2, 1, 9, 5, 3, 4, 8 },
-						{ 1, 9, 8, 3, 4, 2, 5, 6, 7 }, { 8, 5, 9, 7, 6, 1, 4, 2, 3 }, { 4, 2, 6, 8, 5, 3, 7, 9, 1 },
-						{ 7, 1, 3, 9, 2, 4, 8, 5, 6 }, { 9, 6, 1, 5, 3, 7, 2, 8, 4 }, { 2, 8, 7, 4, 1, 9, 6, 3, 5 },
-						{ 3, 4, 5, 2, 8, 6, 1, 7, 9 } };
-		
-		// Need to use numToGuess!
-		// For testing, only 2 cells of "8" is NOT shown
-		
-		boolean[][] hardcodedIsShown = { { true, true, true, true, true, false, true, true, true },
-				{ true, true, true, true, true, true, true, true, false },
-				{ true, true, true, true, true, true, true, true, true },
-				{ true, true, true, true, true, true, true, true, true },
-				{ true, true, true, true, true, true, true, true, true },
-				{ true, true, true, true, true, true, true, true, true },
-				{ true, true, true, true, true, true, true, true, true },
-				{ true, true, true, true, true, true, true, true, true },
-				{ true, true, true, true, true, true, true, true, true } };
-		*/
 
 		for (int row = 0; row < GameBoard.GRID_SIZE; ++row) {
 			for (int col = 0; col < GameBoard.GRID_SIZE; ++col) {
