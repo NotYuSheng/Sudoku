@@ -7,6 +7,7 @@ import java.io.*;
 import java.net.URL;
 import javax.sound.sampled.*;
 import javax.swing.*;
+
 /**
  * The main Sudoku program
  */
@@ -27,7 +28,7 @@ public class SudokuMain extends JFrame {
 	// Menu items
 	static JMenuItem easy, medium, hard;
 	static JMenuItem resetgame, exit;
-	static JMenuItem pause, resume;
+	static JMenuItem resumePause, enableDisable;
 	static JMenuItem help;
 	// create a frame
 	static JFrame f;
@@ -36,7 +37,7 @@ public class SudokuMain extends JFrame {
 	public static final int WINDOW_WIDTH = 300;
 	public static final int WINDOW_HEIGHT = 150;
 	// private Button newGameBtn;
-	
+
 	// Timer Variables
 	int elaspedTime = 0;
 	int seconds = 0;
@@ -48,6 +49,16 @@ public class SudokuMain extends JFrame {
 	String hours_string = String.format("%02d", hours);
 	JLabel timeLabel = new JLabel("00:00:00");
 	Timer timer;
+
+	boolean isGamePaused = false;
+	boolean isSoundDisabled = false;
+
+	// Open an audio input stream.
+	// from a wave File
+	static File soundFile = new File("C:\\Users\\Yu Sheng\\Desktop\\Java\\JavaTutorial\\src\\backgroundmusic.wav");
+	static AudioInputStream audioIn;
+	// Get a sound clip resource.
+	static Clip clip;
 
 	// Constructor
 	public SudokuMain() {
@@ -86,8 +97,8 @@ public class SudokuMain extends JFrame {
 		hard = new JMenuItem("Hard");
 		resetgame = new JMenuItem("Reset Game");
 		exit = new JMenuItem("Exit");
-		pause = new JMenuItem("Pause");
-		resume = new JMenuItem("Resume");
+		resumePause = new JMenuItem("Resume/Pause");
+		enableDisable = new JMenuItem("Enable/Disable sound");
 		help = new JMenuItem("Help");
 
 		// Add listener
@@ -100,8 +111,8 @@ public class SudokuMain extends JFrame {
 		hard.addActionListener(newgamebtnlistener);
 		resetgame.addActionListener(menubarlistener);
 		exit.addActionListener(menubarlistener);
-		pause.addActionListener(menubarlistener);
-		resume.addActionListener(menubarlistener);
+		resumePause.addActionListener(menubarlistener);
+		enableDisable.addActionListener(menubarlistener);
 		help.addActionListener(menubarlistener);
 
 		// Add to sub menu
@@ -120,9 +131,9 @@ public class SudokuMain extends JFrame {
 		filesubmenu.add(exit);
 
 		// Add to sub menu
-		optionssubmenu.add(resume);
-		optionssubmenu.add(pause);
-		
+		optionssubmenu.add(resumePause);
+		optionssubmenu.add(enableDisable);
+
 		// Add to menu
 		menu.add(optionssubmenu);
 		menu.add(help);
@@ -135,7 +146,7 @@ public class SudokuMain extends JFrame {
 
 		// timer
 		add(timeLabel, BorderLayout.NORTH);
-		
+
 		timer = new Timer(1000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				elaspedTime = elaspedTime + 1000;
@@ -149,8 +160,8 @@ public class SudokuMain extends JFrame {
 			}
 		});
 		timer.start();
-		
 
+		
 	}
 
 	/** The entry main() entry method */
@@ -159,7 +170,22 @@ public class SudokuMain extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				new SudokuMain(); // Let the constructor do the job
-				music();
+				try {
+					// Open an audio input stream.
+					// from a wave File
+					audioIn = AudioSystem.getAudioInputStream(soundFile);
+					// Get a sound clip resource.
+					clip = AudioSystem.getClip();
+					// Open audio clip and load samples from the audio input stream.
+					clip.open(audioIn);
+					clip.start();
+				} catch (UnsupportedAudioFileException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (LineUnavailableException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}
@@ -170,7 +196,8 @@ public class SudokuMain extends JFrame {
 		public void actionPerformed(ActionEvent evt) {
 			String action = evt.getActionCommand();
 			elaspedTime = 0;
-			
+			isGamePaused = false;
+			timer.start();
 			if (action == "Easy") {
 				board.init(GameBoard.DEFAULT_DIFFICULTY);
 			}
@@ -200,35 +227,38 @@ public class SudokuMain extends JFrame {
 			if (action == "Help") {
 				board.hintPuzzle();
 			}
-			if (action == "Resume") {
-				board.resume();
-				timer.start();
+			if (action == "Resume/Pause") {
+				if (isGamePaused) {
+					isGamePaused = false;
+					board.resume();
+					timer.start();
+				} else {
+					isGamePaused = true;
+					board.pause();
+					timer.stop();
+				}
+
 			}
-			if (action == "Pause") {
-				board.pause();
-				timer.stop();
+			if (action == "Enable/Disable sound") {
+				if (isSoundDisabled) {
+					isSoundDisabled = false;
+					clip.start();
+				} else {
+					isSoundDisabled = true;
+					clip.stop();
+				}
 			}
 		}
 	}
-
-	public static void music() {
-		try {
-			// Open an audio input stream.
-			// from a wave File
-			File soundFile = new File("C:\\Users\\Yu Sheng\\Desktop\\Java\\JavaTutorial\\src\\backgroundmusic.wav");
-			AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
-			// Get a sound clip resource.
-			Clip clip = AudioSystem.getClip();
-			// Open audio clip and load samples from the audio input stream.
-			clip.open(audioIn);
-			clip.start();
-		} catch (UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (LineUnavailableException e) {
-			e.printStackTrace();
-		}
-	}
-
+	/*
+	 * public static void music() { try { // Open an audio input stream. // from a
+	 * wave File File soundFile = new
+	 * File("C:\\Users\\Yu Sheng\\Desktop\\Java\\JavaTutorial\\src\\backgroundmusic.wav"
+	 * ); AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile); //
+	 * Get a sound clip resource. Clip clip = AudioSystem.getClip(); // Open audio
+	 * clip and load samples from the audio input stream. clip.open(audioIn);
+	 * clip.start(); } catch (UnsupportedAudioFileException e) {
+	 * e.printStackTrace(); } catch (IOException e) { e.printStackTrace(); } catch
+	 * (LineUnavailableException e) { e.printStackTrace(); } }
+	 */
 }
