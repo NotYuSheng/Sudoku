@@ -40,6 +40,10 @@ public class SudokuMain extends JFrame {
 		// Default start at Easy difficulty
 		board.init(50);
 		
+		// Set icon (change path)
+		Image icon = Toolkit.getDefaultToolkit().getImage("C:\\javaproject\\tutorial7\\sudoku\\icon.png");    
+		setIconImage(icon);      
+		
 		pack(); // Pack the UI components, instead of setSize()
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Handle window closing
 		setTitle("Sudoku");
