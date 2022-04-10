@@ -53,9 +53,9 @@ public class GameBoard extends JPanel {
 	 * Initialize the puzzle number, status, background/foreground color, of all the
 	 * cells from puzzle[][] and isRevealed[][]. Call to start a new game.
 	 */
-	public void init() {
+	public void init(int numGuess) {
 		// Get a new puzzle
-		puzzle.newPuzzle(49);
+		puzzle.newPuzzle(numGuess);
 
 		// Based on the puzzle, initialize all the cells.
 		for (int row = 0; row < GRID_SIZE; ++row) {
@@ -108,7 +108,7 @@ public class GameBoard extends JPanel {
 			 */
 			if (isSolved()) {
 				JOptionPane.showMessageDialog(null, "Congratulation!");
-				init();
+				init(50);
 			}
 		}
 	}

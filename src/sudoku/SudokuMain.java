@@ -37,7 +37,8 @@ public class SudokuMain extends JFrame {
 
 		cp.add(board, BorderLayout.CENTER);
 
-		board.init();
+		// Default start at Easy difficulty
+		board.init(50);
 		
 		pack(); // Pack the UI components, instead of setSize()
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Handle window closing
@@ -121,13 +122,13 @@ public class SudokuMain extends JFrame {
 		public void actionPerformed(ActionEvent evt) {
 			String action = evt.getActionCommand();
 			if (action == "Easy") {
-				board.init();
+				board.init(50);
 	        }
 			if (action == "Medium") {
-				board.init();
+				board.init(60);
 	        }
 			if (action == "Hard") {
-				board.init();
+				board.init(70);
 	        }
 		}
 	}
