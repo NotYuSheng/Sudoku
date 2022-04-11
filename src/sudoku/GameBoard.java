@@ -34,9 +34,10 @@ public class GameBoard extends JPanel {
 	private Puzzle puzzle = new Puzzle();
 	
 	boolean isGamePaused = false;
+	boolean isSoundDisabled = false;
 	
-	static File correctsoundFile = new File("C:\\javaproject\\tutorial7\\sudoku\\correct.wav");
-	static File wrongsoundFile = new File("C:\\javaproject\\tutorial7\\sudoku\\wrong.wav");
+	static File correctsoundFile = new File("C:\\Users\\Yu Sheng\\Desktop\\Java\\JavaTutorial\\src\\correct.wav");
+	static File wrongsoundFile = new File("C:\\Users\\Yu Sheng\\Desktop\\Java\\JavaTutorial\\src\\wrong.wav");
 	static AudioInputStream audioIn;
 	// Get a sound clip resource.
 	static Clip clip;
@@ -141,6 +142,13 @@ public class GameBoard extends JPanel {
 		isGamePaused = false;
 	}
 	
+	public void enableSound() {
+		isSoundDisabled = false;
+	}
+	
+	public void disableSound() {
+		isSoundDisabled = true;
+	}
 	
 	// [TODO 2] Define a Listener Inner Class
 	private class CellInputListener implements ActionListener {
@@ -169,7 +177,9 @@ public class GameBoard extends JPanel {
 						clip = AudioSystem.getClip();
 						// Open audio clip and load samples from the audio input stream.
 						clip.open(audioIn);
-						clip.start();
+						if (!isSoundDisabled) {
+							clip.start();
+						}
 					} catch (UnsupportedAudioFileException error) {
 						error.printStackTrace();
 					} catch (IOException error) {
@@ -187,7 +197,9 @@ public class GameBoard extends JPanel {
 						clip = AudioSystem.getClip();
 						// Open audio clip and load samples from the audio input stream.
 						clip.open(audioIn);
-						clip.start();
+						if (!isSoundDisabled) {
+							clip.start();
+						}
 					} catch (UnsupportedAudioFileException error) {
 						error.printStackTrace();
 					} catch (IOException error) {

@@ -72,7 +72,7 @@ public class SudokuMain extends JFrame {
 		board.init(GameBoard.DEFAULT_DIFFICULTY);
 
 		// Set icon (change path)
-		Image icon = Toolkit.getDefaultToolkit().getImage("icon.png");
+		Image icon = Toolkit.getDefaultToolkit().getImage("C:\\Users\\Yu Sheng\\Desktop\\Java\\JavaTutorial\\src\\icon.png");
 		setIconImage(icon);
 
 		pack(); // Pack the UI components, instead of setSize()
@@ -241,10 +241,12 @@ public class SudokuMain extends JFrame {
 			}
 			if (action == "Enable/Disable sound") {
 				if (isSoundDisabled) {
+					board.enableSound();
 					isSoundDisabled = false;
 					clip.start();
 				} else {
 					isSoundDisabled = true;
+					board.disableSound();
 					clip.stop();
 				}
 			}

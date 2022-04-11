@@ -16,7 +16,7 @@ import java.util.Random;
 /**
  * The Sudoku number puzzle to be solved
  */
-public class Puzzle {
+public class Puzzle<Gameboard> {
 	// All variables have package access
 	int[][] numbers = new int[GameBoard.GRID_SIZE][GameBoard.GRID_SIZE];
 
@@ -113,20 +113,25 @@ public class Puzzle {
 	}
 
 	boolean fillRemaining(int row, int col) {
+		// Loop to next row
 		if (col >= GameBoard.GRID_SIZE && row < GameBoard.GRID_SIZE - 1) {
 			row += 1;
 			col = 0;
 		}
+		// Fill complete
 		if (row >= GameBoard.GRID_SIZE && col >= GameBoard.GRID_SIZE) {
 			return true;
 		}
-
+		// Prevent modification of diagonal grids
+		// Grid 1
 		if (row < GameBoard.SQUAREROOTGRID) {
 			if (col < GameBoard.SQUAREROOTGRID)
 				col = GameBoard.SQUAREROOTGRID;
+			// Grid 2
 		} else if (row < GameBoard.GRID_SIZE - GameBoard.SQUAREROOTGRID) {
 			if (col == (int) (row / GameBoard.SQUAREROOTGRID) * GameBoard.SQUAREROOTGRID)
 				col = col + GameBoard.SQUAREROOTGRID;
+			// Grid 3
 		} else {
 			if (col == GameBoard.GRID_SIZE - GameBoard.SQUAREROOTGRID) {
 				row += 1;
@@ -138,11 +143,14 @@ public class Puzzle {
 		}
 
 		for (int num = 1; num <= GameBoard.GRID_SIZE; num++) {
+			// Enumerate until a valid number is inserted to cell
 			if (CheckIfSafe(row, col, num)) {
 				puzzleTable[row][col] = num;
+				// Fill next cell, if valid cell cannot be found in next cell, 
+				// this cell will enumerate to next valid number
 				if (fillRemaining(row, col + 1))
 					return true;
-
+				// Undo this cell
 				puzzleTable[row][col] = 0;
 			}
 		}
