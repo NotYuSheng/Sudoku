@@ -2,6 +2,14 @@ package sudoku;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 public class GameBoard extends JPanel {
@@ -26,6 +34,12 @@ public class GameBoard extends JPanel {
 	private Puzzle puzzle = new Puzzle();
 	
 	boolean isGamePaused = false;
+	
+	static File correctsoundFile = new File("C:\\javaproject\\tutorial7\\sudoku\\correct.wav");
+	static File wrongsoundFile = new File("C:\\javaproject\\tutorial7\\sudoku\\wrong.wav");
+	static AudioInputStream audioIn;
+	// Get a sound clip resource.
+	static Clip clip;
 
 	// Constructor
 	public GameBoard() {
@@ -147,8 +161,40 @@ public class GameBoard extends JPanel {
 				 */
 				if (numberIn == sourceCell.number) {
 					sourceCell.status = CellStatus.CORRECT_GUESS;
+					try {
+						// Open an audio input stream.
+						// from a wave File
+						audioIn = AudioSystem.getAudioInputStream(correctsoundFile);
+						// Get a sound clip resource.
+						clip = AudioSystem.getClip();
+						// Open audio clip and load samples from the audio input stream.
+						clip.open(audioIn);
+						clip.start();
+					} catch (UnsupportedAudioFileException error) {
+						error.printStackTrace();
+					} catch (IOException error) {
+						error.printStackTrace();
+					} catch (LineUnavailableException error) {
+						error.printStackTrace();
+					}
 				} else {
 					sourceCell.status = CellStatus.WRONG_GUESS;
+					try {
+						// Open an audio input stream.
+						// from a wave File
+						audioIn = AudioSystem.getAudioInputStream(wrongsoundFile);
+						// Get a sound clip resource.
+						clip = AudioSystem.getClip();
+						// Open audio clip and load samples from the audio input stream.
+						clip.open(audioIn);
+						clip.start();
+					} catch (UnsupportedAudioFileException error) {
+						error.printStackTrace();
+					} catch (IOException error) {
+						error.printStackTrace();
+					} catch (LineUnavailableException error) {
+						error.printStackTrace();
+					}
 				}
 				sourceCell.paint();
 				/*
