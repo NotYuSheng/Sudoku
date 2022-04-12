@@ -13,10 +13,12 @@ import javax.swing.*;
  */
 public class SudokuMain extends JFrame {
 	// private variables
-	GameBoard board = new GameBoard();
+	GameBoard board = new GameBoard(this);
 
 	// Hint Button
 	JButton btnHint = new JButton("Hint");
+	
+	Container cp = getContentPane();
 
 	// menu
 	static JMenu menu;
@@ -59,17 +61,16 @@ public class SudokuMain extends JFrame {
 	static AudioInputStream audioIn;
 	// Get a sound clip resource.
 	static Clip clip;
-
+	
 	// Constructor
 	public SudokuMain() {
-
-		Container cp = getContentPane();
 		cp.setLayout(new BorderLayout());
 
 		cp.add(board, BorderLayout.CENTER);
-
+		
 		// Default start at Easy difficulty
 		board.init(GameBoard.DEFAULT_DIFFICULTY);
+		updateStatus();
 
 		// Set icon (change path)
 		Image icon = Toolkit.getDefaultToolkit().getImage("C:\\Users\\Yu Sheng\\Desktop\\Java\\JavaTutorial\\src\\icon.png");
@@ -160,10 +161,15 @@ public class SudokuMain extends JFrame {
 			}
 		});
 		timer.start();
-
-		
+	
 	}
 
+	public void updateStatus() {
+		JTextField statusField = new JTextField("Status: " + board.incomplete_cell);
+		cp.add(statusField, BorderLayout.SOUTH);
+		System.out.println("Test");
+	}
+	
 	/** The entry main() entry method */
 	public static void main(String[] args) {
 		// [TODO 1] Check Swing program template on how to run the constructor

@@ -33,6 +33,8 @@ public class Puzzle<Gameboard> {
 	int[][] saveTable;
 	boolean[][] saveIsShown;
 
+	int unsolvedCell = 0;
+	
 	// Constructor
 	public Puzzle() {
 		super(); // JPanel
@@ -187,17 +189,21 @@ public class Puzzle<Gameboard> {
 		loadPuzzle();
 	}
 
-	public void hintPuzzle() {
+	public int[] hintPuzzle() {
+		int[] rowCol = new int[2];
 		boolean search = true;
 		for (int row = 0; row < GameBoard.GRID_SIZE; row++) {
 			for (int col = 0; col < GameBoard.GRID_SIZE; col++) {
 				if (puzzleTableIsShown[row][col] == false && search) {
 					puzzleTableIsShown[row][col] = true;
-					search = false;
+					rowCol[0] = row;
+					rowCol[1] = col;
+					return rowCol;
 				}
 			}
-
 		}
+		System.out.println("Error at hintPuzzle");
+		return rowCol;
 	}
 
 	public void newPuzzle(int numToGuess) {

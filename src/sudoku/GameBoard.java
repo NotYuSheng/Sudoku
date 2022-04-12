@@ -26,7 +26,6 @@ public class GameBoard extends JPanel {
 	// Board width/height in pixels
 
 	public int incomplete_cell;
-	public JTextField status = new JTextField("Status: " + incomplete_cell + " unsolved");
 	
 	// The game board composes of 9x9 "Customized" JTextFields,
 	private Cell[][] cells = new Cell[GRID_SIZE][GRID_SIZE];
@@ -42,8 +41,11 @@ public class GameBoard extends JPanel {
 	// Get a sound clip resource.
 	static Clip clip;
 
+	SudokuMain sudokumain;
+	
 	// Constructor
-	public GameBoard() {
+	public GameBoard(SudokuMain sudokumain) {
+		this.sudokumain = sudokumain;
 		super.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE)); // JPanel
 
 		// Allocate the 2D array of Cell, and added into JPanel.
@@ -104,15 +106,13 @@ public class GameBoard extends JPanel {
 	
 	public void hintPuzzle() {
 		// Get a new puzzle
-		puzzle.hintPuzzle();
+		int[] rowCol = puzzle.hintPuzzle();
+		int row = rowCol[0];
+		int col = rowCol[1];
+		cells[row][col].init(puzzle.numbers[row][col], puzzle.puzzleTableIsShown[row][col]);
 
-		// Based on the puzzle, initialize all the cells.
-		for (int row = 0; row < GRID_SIZE; ++row) {
-			for (int col = 0; col < GRID_SIZE; ++col) {
-				cells[row][col].init(puzzle.numbers[row][col], puzzle.puzzleTableIsShown[row][col]);
-			}
-		}
 		incomplete_cell -= 1;
+		sudokumain.updateStatus();
 		if (isSolved()) {
 			JOptionPane.showMessageDialog(null, "Congratulation!");
 			init(DEFAULT_DIFFICULTY);
@@ -169,6 +169,12 @@ public class GameBoard extends JPanel {
 				 */
 				if (numberIn == sourceCell.number) {
 					sourceCell.status = CellStatus.CORRECT_GUESS;
+					incomplete_cell -= 1;
+					int row = sourceCell.getRow();
+					int col = sourceCell.getCol();
+					puzzle.puzzleTableIsShown[row][col] = true;
+					System.out.println("incomplete_cell" + incomplete_cell);
+					sudokumain.updateStatus();
 					try {
 						// Open an audio input stream.
 						// from a wave File
@@ -189,6 +195,8 @@ public class GameBoard extends JPanel {
 					}
 				} else {
 					sourceCell.status = CellStatus.WRONG_GUESS;
+					// puzzle.CheckIfSafe(sourceCell.getRow(), sourceCell.getCol(), sourceCell.getNumber());
+					
 					try {
 						// Open an audio input stream.
 						// from a wave File
