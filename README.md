@@ -8,9 +8,9 @@ OOP Java Sudoku
 - [X] Automatic puzzle generation with various difficulty level.
 - [X] Hints and cheats (reveal a cell~~, or reveal all cells with number n~~)?
 - [X] Timer (pause/resume), score, progress bar.
-- [ ] Sound effect, ~~background music, enable/disable sound?~~
+- [X] Sound effect, background music, enable/disable sound?
 - [ ] A good Sudoku engine shall accept any "valid" number at the time of input (no duplicate in row, column and sub-grid), but signal a conflict whenever it is detected. Highlight the conflicting cells.
-- [ ] Create a status bar (JTextField at the south zone of BorderLayout) to show the messages (e.g., number of cells remaining) (google "java swing statusbar").
+- [X] Create a status bar (JTextField at the south zone of BorderLayout) to show the messages (e.g., number of cells remaining) (google "java swing statusbar").
 - [ ] Beautify your graphical interface, e.g., color, font, layout, etc.
 - [ ] The sample program processes ActionEvent of the JTextField, which requires user to push the ENTER key. Try KeyEvent with keyTyped() handler; or other means that does not require pushing of ENTER key.
 - [ ] Choice of display "theme"?
