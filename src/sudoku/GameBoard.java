@@ -271,16 +271,17 @@ public class GameBoard extends JPanel {
 					int hardMin = 0;
 					int hardSec = 0;
 
+					// Player's score
+					int playerHour = Integer.parseInt(sudokumain.hours_string);
+					int playerMin = Integer.parseInt(sudokumain.minutes_string);
+					int playerSec = Integer.parseInt(sudokumain.seconds_string);
+					
 					JOptionPane.showMessageDialog(null,
 							"Congratulation! You solved the puzzle on " + sudokumain.difficulty + " difficulty in: "
 									+ sudokumain.hours_string + ":" + sudokumain.minutes_string + ":"
 									+ sudokumain.seconds_string,
 							"Congratulations!", JOptionPane.INFORMATION_MESSAGE);
-					// Player's score
-					int playerHour = Integer.parseInt(sudokumain.hours_string);
-					int playerMin = Integer.parseInt(sudokumain.minutes_string);
-					int playerSec = Integer.parseInt(sudokumain.seconds_string);
-
+					
 					// Read highscore.txt
 					String lineone = "";
 					String linetwo = "";
