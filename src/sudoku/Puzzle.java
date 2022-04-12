@@ -20,7 +20,6 @@ public class Puzzle<Gameboard> {
 	// All variables have package access
 	int[][] numbers = new int[GameBoard.GRID_SIZE][GameBoard.GRID_SIZE];
 
-	// For testing, only 2 cells of "8" is NOT shown
 	boolean[][] isShown = new boolean[GameBoard.GRID_SIZE][GameBoard.GRID_SIZE];
 
 	// Puzzle Table
@@ -35,9 +34,12 @@ public class Puzzle<Gameboard> {
 
 	int unsolvedCell = 0;
 	
+	Gameboard board;
+	
 	// Constructor
-	public Puzzle() {
+	public Puzzle(Gameboard board) {
 		super(); // JPanel
+		this.board = board;
 	}
 
 	public void puzzleTableClear() {

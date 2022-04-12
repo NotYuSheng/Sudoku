@@ -63,7 +63,7 @@ public class Cell extends JTextField {
 	public void setNumber(int number) {
 		this.number = number;
 	}
-
+	
 	// This Cell (JTextField) paints itself based on the status
 	public void paint() {
 		if (status == CellStatus.SHOWN) {
@@ -79,7 +79,7 @@ public class Cell extends JTextField {
 			super.setBackground(BG_NO_GUESS);
 			super.setForeground(FG_NOT_SHOWN);
 		} else if (status == CellStatus.CORRECT_GUESS) {
-			super.setEditable(true);
+			super.setEditable(false);
 			super.setBackground(BG_CORRECT_GUESS);
 		} else if (status == CellStatus.WRONG_GUESS) {
 			super.setEditable(true);

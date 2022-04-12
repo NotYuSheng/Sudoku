@@ -22,15 +22,16 @@ public class GameBoard extends JPanel {
 	public static final int CELL_SIZE = 60; // Cell width/height in pixels
 	public static final int BOARD_WIDTH = CELL_SIZE * GRID_SIZE;
 	public static final int BOARD_HEIGHT = CELL_SIZE * GRID_SIZE;
-	public static final int DEFAULT_DIFFICULTY = 50;
+	public static final int DEFAULT_DIFFICULTY = 5;
 	// Board width/height in pixels
 
+	public int original_incomplete_cell;
 	public int incomplete_cell;
 	
 	// The game board composes of 9x9 "Customized" JTextFields,
 	private Cell[][] cells = new Cell[GRID_SIZE][GRID_SIZE];
 	// It also contains a Puzzle
-	private Puzzle puzzle = new Puzzle();
+	private Puzzle puzzle = new Puzzle(this);
 	
 	boolean isGamePaused = false;
 	boolean isSoundDisabled = false;
@@ -42,6 +43,8 @@ public class GameBoard extends JPanel {
 	static Clip clip;
 
 	SudokuMain sudokumain;
+	
+	public int hint_used = 0;
 	
 	// Constructor
 	public GameBoard(SudokuMain sudokumain) {
@@ -72,15 +75,22 @@ public class GameBoard extends JPanel {
 		super.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
 	}
 
+	public void setHintsUsed(int hint_used) {
+		this.hint_used = hint_used;
+	}
+	
 	/**
 	 * Initialize the puzzle number, status, background/foreground color, of all the
 	 * cells from puzzle[][] and isRevealed[][]. Call to start a new game.
 	 */
 	public void init(int numGuess) {
 		// Get a new puzzle
+		original_incomplete_cell = numGuess;
 		incomplete_cell = numGuess;
 		puzzle.newPuzzle(numGuess);
 		isGamePaused = false;
+		sudokumain.elaspedTime = 0;
+		sudokumain.updateStatus();
 		//status.setText("Status: " + GameBoard.DEFAULT_DIFFICULTY + " unsolved");
 		
 		// Based on the puzzle, initialize all the cells.
@@ -89,16 +99,20 @@ public class GameBoard extends JPanel {
 				cells[row][col].init(puzzle.numbers[row][col], puzzle.puzzleTableIsShown[row][col]);
 			}
 		}
+		
 	}
 	
 	public void loadPuzzle() {
 		// Get a new puzzle
+		hint_used = 0;
+		incomplete_cell = original_incomplete_cell;
 		puzzle.loadPuzzle();
+		sudokumain.updateStatus();
 
 		// Based on the puzzle, initialize all the cells.
 		for (int row = 0; row < GRID_SIZE; ++row) {
 			for (int col = 0; col < GRID_SIZE; ++col) {
-				cells[row][col].init(puzzle.numbers[row][col], puzzle.puzzleTableIsShown[row][col]);
+				cells[row][col].init(puzzle.numbers[row][col], puzzle.isShown[row][col]);
 			}
 		}
 		
@@ -109,6 +123,7 @@ public class GameBoard extends JPanel {
 		int[] rowCol = puzzle.hintPuzzle();
 		int row = rowCol[0];
 		int col = rowCol[1];
+		hint_used += 1;
 		cells[row][col].init(puzzle.numbers[row][col], puzzle.puzzleTableIsShown[row][col]);
 
 		incomplete_cell -= 1;
