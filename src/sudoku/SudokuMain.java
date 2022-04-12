@@ -62,6 +62,8 @@ public class SudokuMain extends JFrame {
 	// Get a sound clip resource.
 	static Clip clip;
 	
+	String difficulty = "easy";
+	
 	// Constructor
 	public SudokuMain() {
 		cp.setLayout(new BorderLayout());
@@ -69,6 +71,7 @@ public class SudokuMain extends JFrame {
 		cp.add(board, BorderLayout.CENTER);
 		
 		// Default start at Easy difficulty
+		difficulty = "easy";
 		board.init(GameBoard.DEFAULT_DIFFICULTY);
 		updateStatus();
 
@@ -204,12 +207,15 @@ public class SudokuMain extends JFrame {
 			isGamePaused = false;
 			timer.start();
 			if (action == "Easy") {
+				difficulty = "easy";
 				board.init(GameBoard.DEFAULT_DIFFICULTY);
 			}
 			if (action == "Medium") {
+				difficulty = "medium";
 				board.init(GameBoard.DEFAULT_DIFFICULTY + 10);
 			}
 			if (action == "Hard") {
+				difficulty = "hard";
 				board.init(GameBoard.DEFAULT_DIFFICULTY + 20);
 			}
 		}
