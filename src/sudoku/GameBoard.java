@@ -173,7 +173,6 @@ public class GameBoard extends JPanel {
 					int row = sourceCell.getRow();
 					int col = sourceCell.getCol();
 					puzzle.puzzleTableIsShown[row][col] = true;
-					System.out.println("incomplete_cell" + incomplete_cell);
 					sudokumain.updateStatus();
 					try {
 						// Open an audio input stream.
