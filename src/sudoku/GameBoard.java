@@ -38,7 +38,7 @@ public class GameBoard extends JPanel {
 	public static final int CELL_SIZE = 60; // Cell width/height in pixels
 	public static final int BOARD_WIDTH = CELL_SIZE * GRID_SIZE;
 	public static final int BOARD_HEIGHT = CELL_SIZE * GRID_SIZE;
-	public static final int DEFAULT_DIFFICULTY = 1;
+	public static final int DEFAULT_DIFFICULTY = 5;
 	// Board width/height in pixels
 
 	public int original_incomplete_cell;
@@ -494,8 +494,10 @@ public class GameBoard extends JPanel {
 					String lineThree = "Name: " + hardName + ", Difficulty: Hard, " + "Time: " + hardHourStr + ":"
 							+ hardMinStr + ":" + hardSecStr;
 
+					// String html = "<html>   <head>     <link       href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'       rel='stylesheet'       integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3'       crossorigin='anonymous'     />   </head>   <!-- Confirmation Page -->   <section     class='bg-dark text-light p-5 p-lg-0 pt-lg-5 text-center text-sm-start'   >     <div class='container'>       <div class='row g-4'>         <div class='d-sm-flex align-items-center justify-content-between'>           <div>             <h1>Highscore</h1>           </div>         </div>       </div>       <div class='p-3'></div>     </div>   </section>    <!-- Table section -->   <section id='about' class='p-5'>     <table class='table'>       <thead>         <tr>           <th scope='col'>Name</th>           <th scope='col'>Difficulty</th>           <th scope='col'>Time</th>         </tr>       </thead>       <tbody>         <tr>           <th scope='row'>Lucas</th>           <td>Easy</td>           <td>00:03:34</td>         </tr>         <tr>           <th scope='row'>Felix</th>           <td>Medium</td>           <td>00:05:59</td>         </tr>         <tr>           <th scope='row'>PengHwee</th>           <td>Hard</td>           <td>00:12:34</td>         </tr>       </tbody>     </table>   </section> </html>";
+					
 					String html = "<html><h1>The top score for each difficulty are:</h1>" + "<p>" + lineOne + "<p>"
-							+ "<p>" + lineTwo + "<p>" + "<p>" + lineThree + "<p>";
+							+ "<p>" + lineTwo + "<p>" + "<p>" + lineThree + "<p></html>";
 					// change to alter the width
 					int w = 175;
 
