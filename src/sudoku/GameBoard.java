@@ -41,8 +41,8 @@ public class GameBoard extends JPanel {
 	public static final int DEFAULT_DIFFICULTY = 5;
 	// Board width/height in pixels
 
-	public int original_incomplete_cell;
-	public int incomplete_cell;
+	public int originalIncompleteCell;
+	public int incompleteCell;
 
 	// The game board composes of 9x9 "Customized" JTextFields,
 	private Cell[][] cells = new Cell[GRID_SIZE][GRID_SIZE];
@@ -60,7 +60,7 @@ public class GameBoard extends JPanel {
 
 	SudokuMain sudokumain;
 
-	public int hint_used = 0;
+	public int hintUsed = 0;
 
 	String nameRegex = "\\d\\w+\\d";
 	String hourRegex = "[h]\\d\\d";
@@ -99,7 +99,7 @@ public class GameBoard extends JPanel {
 	}
 
 	public void setHintsUsed(int hint_used) {
-		this.hint_used = hint_used;
+		this.hintUsed = hint_used;
 	}
 
 	/**
@@ -108,8 +108,8 @@ public class GameBoard extends JPanel {
 	 */
 	public void init(int numGuess) {
 		// Get a new puzzle
-		original_incomplete_cell = numGuess;
-		incomplete_cell = numGuess;
+		originalIncompleteCell = numGuess;
+		incompleteCell = numGuess;
 		puzzle.newPuzzle(numGuess);
 		isGamePaused = false;
 		sudokumain.elaspedTime = 0;
@@ -127,8 +127,8 @@ public class GameBoard extends JPanel {
 
 	public void loadPuzzle() {
 		// Get a new puzzle
-		hint_used = 0;
-		incomplete_cell = original_incomplete_cell;
+		hintUsed = 0;
+		incompleteCell = originalIncompleteCell;
 		puzzle.loadPuzzle();
 		sudokumain.updateStatus();
 
@@ -146,10 +146,10 @@ public class GameBoard extends JPanel {
 		int[] rowCol = puzzle.hintPuzzle();
 		int row = rowCol[0];
 		int col = rowCol[1];
-		hint_used += 1;
+		hintUsed += 1;
 		cells[row][col].init(puzzle.numbers[row][col], puzzle.puzzleTableIsShown[row][col]);
 
-		incomplete_cell -= 1;
+		incompleteCell -= 1;
 		sudokumain.updateStatus();
 		if (isSolved()) {
 			JOptionPane.showMessageDialog(null, "Congratulation!");
@@ -223,7 +223,7 @@ public class GameBoard extends JPanel {
 				 */
 				if (numberIn == sourceCell.number) {
 					sourceCell.status = CellStatus.CORRECT_GUESS;
-					incomplete_cell -= 1;
+					incompleteCell -= 1;
 					int row = sourceCell.getRow();
 					int col = sourceCell.getCol();
 					puzzle.puzzleTableIsShown[row][col] = true;
@@ -301,15 +301,15 @@ public class GameBoard extends JPanel {
 							"Congratulations!", JOptionPane.INFORMATION_MESSAGE);
 
 					// Read highscore.txt
-					String lineone = "";
-					String linetwo = "";
-					String linethree = "";
+					String lineOne = "";
+					String lineTwo = "";
+					String lineThree = "";
 					try {
 						File myObj = new File("highscore.txt");
 						Scanner myReader = new Scanner(myObj);
-						lineone = myReader.nextLine();
-						linetwo = myReader.nextLine();
-						linethree = myReader.nextLine();
+						lineOne = myReader.nextLine();
+						lineTwo = myReader.nextLine();
+						lineThree = myReader.nextLine();
 
 						myReader.close();
 					} catch (FileNotFoundException ex) {
@@ -327,82 +327,73 @@ public class GameBoard extends JPanel {
 					Pattern minPattern = Pattern.compile(minRegex);
 					Pattern secPattern = Pattern.compile(secRegex);
 
-					Matcher matchereasyname = namePattern.matcher(lineone);
-					Matcher matchereasyhour = hourPattern.matcher(lineone);
-					Matcher matchereasymin = minPattern.matcher(lineone);
-					Matcher matchereasysec = secPattern.matcher(lineone);
+					Matcher matcherEasyName = namePattern.matcher(lineOne);
+					Matcher matcherEasyHour = hourPattern.matcher(lineOne);
+					Matcher matcherEasyMin = minPattern.matcher(lineOne);
+					Matcher matcherEasySec = secPattern.matcher(lineOne);
 
-					Matcher matchermediumname = namePattern.matcher(linetwo);
-					Matcher matchermediumhour = hourPattern.matcher(linetwo);
-					Matcher matchermediummin = minPattern.matcher(linetwo);
-					Matcher matchermediumsec = secPattern.matcher(linetwo);
+					Matcher matcherMediumName = namePattern.matcher(lineTwo);
+					Matcher matcherMediumHour = hourPattern.matcher(lineTwo);
+					Matcher matcherMediumMin = minPattern.matcher(lineTwo);
+					Matcher matcherMediumSec = secPattern.matcher(lineTwo);
 
-					Matcher matcherhardname = namePattern.matcher(linethree);
-					Matcher matcherhardhour = hourPattern.matcher(linethree);
-					Matcher matcherhardmin = minPattern.matcher(linethree);
-					Matcher matcherhardsec = secPattern.matcher(linethree);
+					Matcher matcherHardName = namePattern.matcher(lineThree);
+					Matcher matcherHardHour = hourPattern.matcher(lineThree);
+					Matcher matcherHardMin = minPattern.matcher(lineThree);
+					Matcher matcherHardSec = secPattern.matcher(lineThree);
 
-					matchereasyname.find();
-					matchereasyhour.find();
-					matchereasymin.find();
-					matchereasysec.find();
+					matcherEasyName.find();
+					matcherEasyHour.find();
+					matcherEasyMin.find();
+					matcherEasySec.find();
 
 					// Remove first and last character from name
-					easyName = matchereasyname.group().substring(1);
+					easyName = matcherEasyName.group().substring(1);
 					StringBuilder builderEasy = new StringBuilder();
 					int nameLength = easyName.length();
 					builderEasy.append(easyName);
 					builderEasy.delete(nameLength - 1, nameLength);
 					easyName = builderEasy.toString();
 
-					easyHour = Integer.parseInt(matchereasyhour.group().substring(1));
-					easyMin = Integer.parseInt(matchereasymin.group().substring(1));
-					easySec = Integer.parseInt(matchereasysec.group().substring(1));
+					easyHour = Integer.parseInt(matcherEasyHour.group().substring(1));
+					easyMin = Integer.parseInt(matcherEasyMin.group().substring(1));
+					easySec = Integer.parseInt(matcherEasySec.group().substring(1));
 
-					matchermediumname.find();
-					matchermediumhour.find();
-					matchermediummin.find();
-					matchermediumsec.find();
+					matcherMediumName.find();
+					matcherMediumHour.find();
+					matcherMediumMin.find();
+					matcherMediumSec.find();
 
 					// Remove first and last character from name
-					mediumName = matchermediumname.group().substring(1);
+					mediumName = matcherMediumName.group().substring(1);
 					StringBuilder builderMedium = new StringBuilder();
 					nameLength = mediumName.length();
 					builderMedium.append(mediumName);
 					builderMedium.delete(nameLength - 1, nameLength);
 					mediumName = builderMedium.toString();
 
-					mediumHour = Integer.parseInt(matchermediumhour.group().substring(1));
-					mediumMin = Integer.parseInt(matchermediummin.group().substring(1));
-					mediumSec = Integer.parseInt(matchermediumsec.group().substring(1));
+					mediumHour = Integer.parseInt(matcherMediumHour.group().substring(1));
+					mediumMin = Integer.parseInt(matcherMediumMin.group().substring(1));
+					mediumSec = Integer.parseInt(matcherMediumSec.group().substring(1));
 
-					matcherhardname.find();
-					matcherhardhour.find();
-					matcherhardmin.find();
-					matcherhardsec.find();
+					matcherHardName.find();
+					matcherHardHour.find();
+					matcherHardMin.find();
+					matcherHardSec.find();
 
 					// Remove first and last character from name
-					hardName = matcherhardname.group().substring(1);
+					hardName = matcherHardName.group().substring(1);
 					StringBuilder builderHard = new StringBuilder();
 					nameLength = hardName.length();
 					builderHard.append(hardName);
 					builderHard.delete(nameLength - 1, nameLength);
 					hardName = builderHard.toString();
 
-					hardHour = Integer.parseInt(matcherhardhour.group().substring(1));
-					hardMin = Integer.parseInt(matcherhardmin.group().substring(1));
-					hardSec = Integer.parseInt(matcherhardsec.group().substring(1));
+					hardHour = Integer.parseInt(matcherHardHour.group().substring(1));
+					hardMin = Integer.parseInt(matcherHardMin.group().substring(1));
+					hardSec = Integer.parseInt(matcherHardSec.group().substring(1));
 
-					String easyHourStr = String.valueOf(easyHour);
-					String easyMinStr = String.valueOf(easyMin);
-					String easySecStr = String.valueOf(easySec);
-					String mediumHourStr = String.valueOf(mediumHour);
-					String mediumMinStr = String.valueOf(mediumMin);
-					String mediumSecStr = String.valueOf(mediumSec);
-					String hardHourStr = String.valueOf(hardHour);
-					String hardMinStr = String.valueOf(hardMin);
-					String hardSecStr = String.valueOf(hardSec);
-
+					//System.out.println("sudokumain.difficulty: " + sudokumain.difficulty);
 					if (sudokumain.difficulty == "easy") {
 						if (playerHour < easyHour) {
 							easyName = name;
@@ -456,6 +447,16 @@ public class GameBoard extends JPanel {
 						}
 					}
 
+					String easyHourStr = String.valueOf(easyHour);
+					String easyMinStr = String.valueOf(easyMin);
+					String easySecStr = String.valueOf(easySec);
+					String mediumHourStr = String.valueOf(mediumHour);
+					String mediumMinStr = String.valueOf(mediumMin);
+					String mediumSecStr = String.valueOf(mediumSec);
+					String hardHourStr = String.valueOf(hardHour);
+					String hardMinStr = String.valueOf(hardMin);
+					String hardSecStr = String.valueOf(hardSec);
+					
 					// Padding string values
 					if (easyHour < 10) {
 						easyHourStr = "0" + easyHour;
@@ -505,11 +506,11 @@ public class GameBoard extends JPanel {
 					}
 
 					// Highscore message dialog
-					String lineOne = "Name: " + easyName + ", Difficulty: Easy, " + "Time: " + easyHourStr + ":"
+					String outputLineOne = "Name: " + easyName + ", Difficulty: Easy, " + "Time: " + easyHourStr + ":"
 							+ easyMinStr + ":" + easySecStr;
-					String lineTwo = "Name: " + mediumName + ", Difficulty: Medium, " + "Time: " + mediumHourStr + ":"
+					String outputLineTwo = "Name: " + mediumName + ", Difficulty: Medium, " + "Time: " + mediumHourStr + ":"
 							+ mediumMinStr + ":" + mediumSecStr;
-					String lineThree = "Name: " + hardName + ", Difficulty: Hard, " + "Time: " + hardHourStr + ":"
+					String outputLineThree = "Name: " + hardName + ", Difficulty: Hard, " + "Time: " + hardHourStr + ":"
 							+ hardMinStr + ":" + hardSecStr;
 
 					// String html = "<html> <head> <link
@@ -528,8 +529,8 @@ public class GameBoard extends JPanel {
 					// <td>Medium</td> <td>00:05:59</td> </tr> <tr> <th scope='row'>PengHwee</th>
 					// <td>Hard</td> <td>00:12:34</td> </tr> </tbody> </table> </section> </html>";
 
-					String html = "<html><h1>The top score for each difficulty are:</h1>" + "<p>" + lineOne + "<p>"
-							+ "<p>" + lineTwo + "<p>" + "<p>" + lineThree + "<p></html>";
+					String html = "<html><h1>The top score for each difficulty are:</h1>" + "<p>" + outputLineOne + "<p>"
+							+ "<p>" + outputLineTwo + "<p>" + "<p>" + outputLineThree + "<p></html>";
 					// change to alter the width
 					int w = 175;
 

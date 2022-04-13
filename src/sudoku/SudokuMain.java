@@ -168,7 +168,7 @@ public class SudokuMain extends JFrame {
 	}
 
 	public void updateStatus() {
-		JTextField statusField = new JTextField("Remaining cells: " + board.incomplete_cell + ", Hint used: " + board.hint_used);
+		JTextField statusField = new JTextField("Remaining cells: " + board.incompleteCell + ", Hint used: " + board.hintUsed);
 		cp.add(statusField, BorderLayout.SOUTH);
 	}
 	
