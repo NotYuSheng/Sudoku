@@ -82,14 +82,16 @@ public class GameBoard extends JPanel {
 
 		// [TODO 3] Allocate a common listener as the ActionEvent listener for all the
 
-		CellInputListener listener = new CellInputListener();
+		CellInputListenerKey keyListener = new CellInputListenerKey();
+		// CellInputListener listener = new CellInputListener();
 		// [TODO 4] Every editable cell adds this common listener
 
 		for (int row = 0; row < GRID_SIZE; row++) {
 			for (int col = 0; col < GRID_SIZE; col++) {
 				if (cells[row][col].isEditable()) {
 					// For all editable rows and cols
-					cells[row][col].addActionListener(listener);
+					cells[row][col].addKeyListener(keyListener);
+					// cells[row][col].addActionListener(listener);
 				}
 			}
 		}
@@ -187,9 +189,25 @@ public class GameBoard extends JPanel {
 	}
 
 	// [TODO 2] Define a Listener Inner Class
-	public class CellInputListener implements ActionListener {
+	public class CellInputListenerKey implements KeyListener {
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			// System.out.println("test1: " + e.getKeyText(e.getKeyCode()));
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			// System.out.println("test2: " + e.getKeyText(e.getKeyCode()));
+			Cell sourceCell = (Cell) e.getSource();
+			// System.out.println("You entered " + sourceCell.getText());
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			// System.out.println("test3: " + e.getKeyText(e.getKeyCode()));
 			if (!isGamePaused) {
 				// Get the JTextField that triggers this event
 				Cell sourceCell = (Cell) e.getSource();
@@ -275,13 +293,13 @@ public class GameBoard extends JPanel {
 					int playerHour = Integer.parseInt(sudokumain.hours_string);
 					int playerMin = Integer.parseInt(sudokumain.minutes_string);
 					int playerSec = Integer.parseInt(sudokumain.seconds_string);
-					
+
 					JOptionPane.showMessageDialog(null,
 							"Congratulation! You solved the puzzle on " + sudokumain.difficulty + " difficulty in: "
 									+ sudokumain.hours_string + ":" + sudokumain.minutes_string + ":"
 									+ sudokumain.seconds_string,
 							"Congratulations!", JOptionPane.INFORMATION_MESSAGE);
-					
+
 					// Read highscore.txt
 					String lineone = "";
 					String linetwo = "";
@@ -384,7 +402,7 @@ public class GameBoard extends JPanel {
 					String hardHourStr = String.valueOf(hardHour);
 					String hardMinStr = String.valueOf(hardMin);
 					String hardSecStr = String.valueOf(hardSec);
-					
+
 					if (sudokumain.difficulty == "easy") {
 						if (playerHour < easyHour) {
 							easyName = name;
@@ -494,8 +512,22 @@ public class GameBoard extends JPanel {
 					String lineThree = "Name: " + hardName + ", Difficulty: Hard, " + "Time: " + hardHourStr + ":"
 							+ hardMinStr + ":" + hardSecStr;
 
-					// String html = "<html>   <head>     <link       href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'       rel='stylesheet'       integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3'       crossorigin='anonymous'     />   </head>   <!-- Confirmation Page -->   <section     class='bg-dark text-light p-5 p-lg-0 pt-lg-5 text-center text-sm-start'   >     <div class='container'>       <div class='row g-4'>         <div class='d-sm-flex align-items-center justify-content-between'>           <div>             <h1>Highscore</h1>           </div>         </div>       </div>       <div class='p-3'></div>     </div>   </section>    <!-- Table section -->   <section id='about' class='p-5'>     <table class='table'>       <thead>         <tr>           <th scope='col'>Name</th>           <th scope='col'>Difficulty</th>           <th scope='col'>Time</th>         </tr>       </thead>       <tbody>         <tr>           <th scope='row'>Lucas</th>           <td>Easy</td>           <td>00:03:34</td>         </tr>         <tr>           <th scope='row'>Felix</th>           <td>Medium</td>           <td>00:05:59</td>         </tr>         <tr>           <th scope='row'>PengHwee</th>           <td>Hard</td>           <td>00:12:34</td>         </tr>       </tbody>     </table>   </section> </html>";
-					
+					// String html = "<html> <head> <link
+					// href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'
+					// rel='stylesheet'
+					// integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3'
+					// crossorigin='anonymous' /> </head> <!-- Confirmation Page --> <section
+					// class='bg-dark text-light p-5 p-lg-0 pt-lg-5 text-center text-sm-start' >
+					// <div class='container'> <div class='row g-4'> <div class='d-sm-flex
+					// align-items-center justify-content-between'> <div> <h1>Highscore</h1> </div>
+					// </div> </div> <div class='p-3'></div> </div> </section> <!-- Table section
+					// --> <section id='about' class='p-5'> <table class='table'> <thead> <tr> <th
+					// scope='col'>Name</th> <th scope='col'>Difficulty</th> <th
+					// scope='col'>Time</th> </tr> </thead> <tbody> <tr> <th scope='row'>Lucas</th>
+					// <td>Easy</td> <td>00:03:34</td> </tr> <tr> <th scope='row'>Felix</th>
+					// <td>Medium</td> <td>00:05:59</td> </tr> <tr> <th scope='row'>PengHwee</th>
+					// <td>Hard</td> <td>00:12:34</td> </tr> </tbody> </table> </section> </html>";
+
 					String html = "<html><h1>The top score for each difficulty are:</h1>" + "<p>" + lineOne + "<p>"
 							+ "<p>" + lineTwo + "<p>" + "<p>" + lineThree + "<p></html>";
 					// change to alter the width
