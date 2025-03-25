@@ -17,4 +17,4 @@ OOP Java Sudoku
 - [ ] A good Sudoku engine shall accept any "valid" number at the time of input (no duplicate in row, column and sub-grid), but signal a conflict whenever it is detected. Highlight the conflicting cells.
 - [ ] A side panel for command, display, strategy?
 - [ ] Re-organize your codes. Apply your OO knowledge to factor out a class called GameBoard, which is a customized JPanel.
-- [ ] (Very difficult) Multi-Player game through networking.
+- [ ] Multi-Player game through networking.
